@@ -9,7 +9,7 @@ public class LoaderTest {
     @Test
     public void shouldLoadBoardFromFole() throws Exception {
         Loader loader = new Loader();
-        Board board = loader.loadBoard("./input.txt");
+        Board board = loader.loadBoard("src/test/resources/input.txt");
 
         Assert.assertEquals(
                 "*************\n" +
