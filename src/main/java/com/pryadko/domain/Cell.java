@@ -1,5 +1,7 @@
 package com.pryadko.domain;
 
+import java.util.Objects;
+
 public class Cell {
     private int id;
     private int value;
@@ -22,7 +24,7 @@ public class Cell {
     }
 
     public void setValue(String value) {
-        if (value == " ") {
+        if (Objects.equals(value, " ")) {
             this.value = 0;
         } else {
             setValue(Integer.parseInt(value));
