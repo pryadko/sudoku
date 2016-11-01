@@ -8,7 +8,6 @@ public class BoardTest {
     public void shouldGenereteEmptyBoardWhenWeCreateNewOne() throws Exception {
         Board board = new Board();
 
-        System.out.println(board);
         Assert.assertEquals(
                 "*************\n" +
                 "*   *   *   *\n" +
