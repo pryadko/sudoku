@@ -12,6 +12,10 @@ public class Board {
         }
     }
 
+    public void setValue(int index, int value) {
+        cells.get(index).setValue(value);
+    }
+
     @Override
     public String toString() {
         String result = "*************\n";
