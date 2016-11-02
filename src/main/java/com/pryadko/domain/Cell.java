@@ -1,14 +1,24 @@
 package com.pryadko.domain;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Cell {
     private int id;
     private int value;
+    private Set<Integer> allowNumbers;
 
     public Cell(int id, int value) {
         this.id = id;
-        this.value = value;
+        initValue();
+        setValue(value);
+    }
+
+    private void initValue() {
+        setValue(0);
+        allowNumbers = new HashSet<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
     }
 
     public int getValue() {
@@ -20,12 +30,21 @@ public class Cell {
     }
 
     public void setValue(int value) {
+        if (!allowNumbers.contains(value)) {
+            throw new UnsupportedOperationException("Number = " + value + " not allow for cellId = " + id);
+        }
+        allowNumbers.remove(value);
         this.value = value;
+        proceedDependentCells();
+    }
+
+    private void proceedDependentCells() {
+
     }
 
     public void setValue(String value) {
         if (Objects.equals(value, " ")) {
-            this.value = 0;
+            initValue();
         } else {
             setValue(Integer.parseInt(value));
         }
