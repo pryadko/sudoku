@@ -23,6 +23,10 @@ public class Cell {
         return value;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String valueToString() {
         return value == 0 ? " " : String.valueOf(value);
     }
@@ -60,5 +64,10 @@ public class Cell {
         int result = id;
         result = 31 * result + value;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "C[" + id + "]=" + value;
     }
 }
