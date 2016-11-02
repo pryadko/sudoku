@@ -2,7 +2,6 @@ package com.pryadko.domain;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class Cell {
@@ -10,14 +9,13 @@ public class Cell {
     private int value;
     private Set<Integer> allowNumbers;
 
-    public Cell(int id, int value) {
+    public Cell(int id) {
         this.id = id;
         initValue();
-        setValue(value);
     }
 
     private void initValue() {
-        setValue(0);
+        value = 0;
         allowNumbers = new HashSet<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
     }
 
@@ -43,11 +41,7 @@ public class Cell {
     }
 
     public void setValue(String value) {
-        if (Objects.equals(value, " ")) {
-            initValue();
-        } else {
-            setValue(Integer.parseInt(value));
-        }
+        setValue(Integer.parseInt(value));
     }
 
     @Override

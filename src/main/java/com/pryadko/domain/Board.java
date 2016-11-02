@@ -8,7 +8,7 @@ public class Board {
 
     public Board() {
         for (int i = 0; i < 81; i++) {
-            cells.add(new Cell(i, 0));
+            cells.add(new Cell(i));
         }
     }
 
