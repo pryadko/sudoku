@@ -44,10 +44,6 @@ public class Cell {
 
     }
 
-    public void setValue(String value) {
-        setValue(Integer.parseInt(value));
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

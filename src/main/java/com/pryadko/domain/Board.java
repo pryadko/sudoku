@@ -22,7 +22,7 @@ public class Board {
     }
 
     public void setValue(int index, String value) {
-        cells.get(index).setValue(value);
+        setValue(index, Integer.valueOf(value));
     }
 
     protected Set<Cell> getDependentCell(Integer cellId) {
