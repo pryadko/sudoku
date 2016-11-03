@@ -27,23 +27,21 @@ public class Board {
 
     protected Set<Cell> getDependentCell(Integer cellId) {
         Set<Cell> dependentCells = new HashSet<>();
-        int col = (cellId + 1) / SIZE;
-        int row = (cellId) * 10 / SIZE;
-        int boxCol = (col + 1) / SMALL_SIZE;
-        int boxRow = (row) * 10 / SMALL_SIZE;
-        IntStream.range(col, SIZE + col)
-                .filter(id -> cellId != id)
-                .forEach(id -> dependentCells.add(cells.get(id)));
-
         IntStream.range(0, SIZE)
-                .forEach(value -> dependentCells.add(cells.get(value * SIZE + row)));
+                .forEach(id -> {
+                    dependentCells.add(cells.get(cellId / SIZE * SIZE + id));
+                    dependentCells.add(cells.get(id * SIZE + cellId % SIZE));
+                });
 
         IntStream.range(0, SMALL_SIZE)
                 .forEach(x -> IntStream.range(0, SMALL_SIZE)
                         .forEach(y -> {
-                            Cell e = cells.get(x + boxCol * SMALL_SIZE + (boxRow * SMALL_SIZE * SIZE) + y * SIZE);
-                            dependentCells.add(e);
+                            int startPosition = SMALL_SIZE * (cellId % SIZE / SMALL_SIZE + cellId / SIZE / SMALL_SIZE * SIZE);
+                            int index = startPosition + y * SIZE + x;
+                            dependentCells.add(cells.get(index));
                         }));
+
+        dependentCells.removeIf(cell -> cell.getId() == cellId);
 
         return dependentCells;
     }
