@@ -18,6 +18,7 @@ public class Board {
     }
 
     public void setValue(int index, int value) {
+        //todo need add range validation
         queue.add(new Pair<>(index, value));
         solve();
     }
@@ -43,6 +44,9 @@ public class Board {
     }
 
     public void setValue(int index, String value) {
+        if (Objects.equals(value, " ")) {
+            return;
+        }
         setValue(index, Integer.valueOf(value));
     }
 
