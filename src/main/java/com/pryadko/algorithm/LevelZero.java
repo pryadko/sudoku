@@ -1,25 +1,31 @@
 package com.pryadko.algorithm;
 
-import com.pryadko.domain.Cell;
+import com.pryadko.domain.Board;
 import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 @Service
-public class LevelZero implements Algorithm {
-    @Override
-    public Collection<? extends Pair<Integer, Integer>> solve(Set<Cell> dependentCell) {
-        HashSet<Pair<Integer, Integer>> queue = new HashSet<>();
-        dependentCell.forEach(cell -> {
-            if (cell.hasOneVariant()) {
-                Pair<Integer, Integer> newPairToSolve = new Pair<>(cell.getId(), cell.getVariant());
-                queue.add(newPairToSolve);
-            }
-        });
+public class LevelZero extends AbstractAlgorithm {
+    public LevelZero(Board board) {
+        super(board);
+    }
 
-        return queue;
+    @Override
+    public Board solve() {
+        if (queue.isEmpty()) {
+            return board;
+        }
+        Pair<Integer, Integer> pair = queue.poll();
+        board.setValue(pair.getKey(), pair.getValue());
+
+        board.getDependentCell(pair.getKey())
+                .forEach(cell -> {
+                    if (cell.hasOneVariant()) {
+                        Pair<Integer, Integer> newPairToSolve = new Pair<>(cell.getId(), cell.getVariant());
+                        queue.add(newPairToSolve);
+                    }
+                });
+
+        return solve();
     }
 }

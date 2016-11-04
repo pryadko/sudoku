@@ -1,17 +1,23 @@
 package com.pryadko.algorithm;
 
-import com.pryadko.domain.Cell;
+import com.pryadko.domain.Board;
 import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
 @Service
-public class LevelDummy implements Algorithm {
+public class LevelDummy extends AbstractAlgorithm {
+    public LevelDummy(Board board) {
+        super(board);
+    }
+
     @Override
-    public Collection<? extends Pair<Integer, Integer>> solve(Set<Cell> dependentCell) {
-        return new HashSet<>();
+    public Board solve() {
+        if (queue.isEmpty()) {
+            return board;
+        }
+        Pair<Integer, Integer> pair = queue.poll();
+        board.setValue(pair.getKey(), pair.getValue());
+
+        return solve();
     }
 }

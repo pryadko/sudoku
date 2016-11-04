@@ -1,7 +1,5 @@
 package com.pryadko.domain;
 
-import com.pryadko.algorithm.Algorithm;
-import com.pryadko.algorithm.LevelDummy;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,8 +28,20 @@ public class BoardTest {
             put(34, new Integer[]{27, 28, 29, 30, 31, 32, 33, 35, 7, 16, 25, 43, 52, 61, 70, 79, 42, 51, 44, 53});
         }
     };
-
-    private static final Algorithm levelDummy = new LevelDummy();
+    public static final String EMPTY_BOARD =
+            "*************\n" +
+                    "*   *   *   *\n" +
+                    "*   *   *   *\n" +
+                    "*   *   *   *\n" +
+                    "*************\n" +
+                    "*   *   *   *\n" +
+                    "*   *   *   *\n" +
+                    "*   *   *   *\n" +
+                    "*************\n" +
+                    "*   *   *   *\n" +
+                    "*   *   *   *\n" +
+                    "*   *   *   *\n" +
+                    "*************\n";
 
     @Before
     public void setUp() throws Exception {
@@ -39,29 +49,15 @@ public class BoardTest {
     }
 
     @Test
-    public void shouldGenereteEmptyBoardWhenWeCreateNewOne() throws Exception {
-        Board board = new Board(levelDummy);
+    public void shouldGenerateEmptyBoardWhenWeCreateNewOne() throws Exception {
+        Board board = new Board();
 
-        Assert.assertEquals(
-                "*************\n" +
-                        "*   *   *   *\n" +
-                        "*   *   *   *\n" +
-                        "*   *   *   *\n" +
-                        "*************\n" +
-                        "*   *   *   *\n" +
-                        "*   *   *   *\n" +
-                        "*   *   *   *\n" +
-                        "*************\n" +
-                        "*   *   *   *\n" +
-                        "*   *   *   *\n" +
-                        "*   *   *   *\n" +
-                        "*************\n",
-                board.toString());
+        Assert.assertEquals(EMPTY_BOARD, board.toString());
     }
 
     @Test
     public void shouldPopulateDependentsIdForCell() throws Exception {
-        Board board = new Board(levelDummy);
+        Board board = new Board();
 
         EXPECTED.forEach((key, expected) -> assertArrayEquals(expected, toIds(board.getDependentCell(key))));
     }

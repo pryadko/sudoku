@@ -1,64 +1,35 @@
 package com.pryadko.domain;
 
-import com.pryadko.algorithm.Algorithm;
-import javafx.util.Pair;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
+@Repository
 public class Board {
     private static int SIZE = 9;
     private static int SMALL_SIZE = SIZE / 3;
     private List<Cell> cells = new ArrayList<>(81);
-    private Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
-    private final Algorithm algorithm;
 
-    @Autowired
-    public Board(Algorithm algorithm) {
+    public Board() {
         for (int i = 0; i < SIZE * SIZE; i++) {
             cells.add(new Cell(i));
         }
-        this.algorithm = algorithm;
     }
 
-    public void addAllToQueue(Collection<? extends Pair<Integer, Integer>> queue) {
-        this.queue.addAll(queue);
-        solve();
+    public List<Cell> getCells() {
+        return new ArrayList<>(cells);
     }
-
 
     public void setValue(int index, int value) {
-        //todo need add range validation
-        queue.add(new Pair<>(index, value));
-        solve();
+        cells.get(index).setValue(value);
+        getDependentCell(index).forEach(cell -> cell.removeDependency(value));
     }
 
-    private void solve() {
-        if (queue.isEmpty()) {
-            return;
-        }
-        Pair<Integer, Integer> pairToSolve = queue.poll();
-        Integer key = pairToSolve.getKey();
-        Integer value = pairToSolve.getValue();
-        cells.get(key).setValue(value);
-
-        Set<Cell> dependentCell = getDependentCell(key);
-        dependentCell.forEach(cell -> cell.removeDependency(value));
-
-        queue.addAll(algorithm.solve(dependentCell));
-
-        solve();
-    }
-
-    public void setValue(int index, String value) {
-        if (Objects.equals(value, " ")) {
-            return;
-        }
-        setValue(index, Integer.valueOf(value));
-    }
-
-    protected Set<Cell> getDependentCell(Integer cellId) {
+    public Set<Cell> getDependentCell(Integer cellId) {
         Set<Cell> dependentCells = new HashSet<>();
         IntStream.range(0, SIZE)
                 .forEach(id -> {

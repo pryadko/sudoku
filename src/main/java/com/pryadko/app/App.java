@@ -19,6 +19,6 @@ public class App implements CommandLineRunner {
         if (strings.length == 0) {
             return;
         }
-        System.out.println(loader.loadQueue(strings[0]));
+        System.out.println(loader.loadBoard(strings[0]));
     }
 }

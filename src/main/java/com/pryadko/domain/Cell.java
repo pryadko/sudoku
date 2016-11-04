@@ -85,4 +85,12 @@ public class Cell {
 
         return allowNumbers.iterator().next();
     }
+
+    public boolean isEmpty() {
+        return value == 0;
+    }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
 }
