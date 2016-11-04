@@ -32,16 +32,19 @@ public class Cell {
     }
 
     public void setValue(int value) {
+        if (this.value == value) {
+            return;
+        }
         if (!allowNumbers.contains(value)) {
             throw new UnsupportedOperationException("Number = " + value + " not allow for cellId = " + id);
         }
-        allowNumbers.remove(value);
+        cleanAllowNumbers();
+
         this.value = value;
-        proceedDependentCells();
     }
 
-    private void proceedDependentCells() {
-
+    private void cleanAllowNumbers() {
+        allowNumbers = new HashSet<>();
     }
 
     @Override
@@ -65,5 +68,21 @@ public class Cell {
     @Override
     public String toString() {
         return "C[" + id + "]=" + value;
+    }
+
+    public void removeDependency(Integer key) {
+        allowNumbers.remove(key);
+    }
+
+    public boolean hasOneVariant() {
+        return allowNumbers.size() == 1;
+    }
+
+    public int getVariant() {
+        if (!hasOneVariant()) {
+            throw new UnsupportedOperationException("We have not One variant for " + this);
+        }
+
+        return allowNumbers.iterator().next();
     }
 }
