@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class LoaderTest {
-    private Loader loader = new Loader();
+    private final Loader loader = new Loader();
 /*    private Algorithm levelDummy = new AbstractAlgorithm();
     private Algorithm levelZero = new LevelZero();*/
 

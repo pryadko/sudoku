@@ -28,7 +28,7 @@ public class BoardTest {
             put(34, new Integer[]{27, 28, 29, 30, 31, 32, 33, 35, 7, 16, 25, 43, 52, 61, 70, 79, 42, 51, 44, 53});
         }
     };
-    public static final String EMPTY_BOARD =
+    private static final String EMPTY_BOARD =
             "*************\n" +
                     "*   *   *   *\n" +
                     "*   *   *   *\n" +

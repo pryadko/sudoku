@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Cell {
-    private int id;
+    private final int id;
     private int value;
     private Set<Integer> allowNumbers;
 
@@ -86,7 +86,7 @@ public class Cell {
         return allowNumbers.iterator().next();
     }
 
-    public boolean isEmpty() {
+    private boolean isEmpty() {
         return value == 0;
     }
 

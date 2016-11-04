@@ -10,9 +10,9 @@ import java.util.stream.IntStream;
 
 @Repository
 public class Board {
-    private static int SIZE = 9;
-    private static int SMALL_SIZE = SIZE / 3;
-    private List<Cell> cells = new ArrayList<>(81);
+    private static final int SIZE = 9;
+    private static final int SMALL_SIZE = SIZE / 3;
+    private final List<Cell> cells = new ArrayList<>(81);
 
     public Board() {
         for (int i = 0; i < SIZE * SIZE; i++) {

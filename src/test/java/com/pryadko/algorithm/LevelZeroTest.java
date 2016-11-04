@@ -20,7 +20,7 @@ public class LevelZeroTest {
                     "*287*419*635*\n" +
                     "*345*286*179*\n" +
                     "*************\n";
-    private Loader loader = new Loader();
+    private final Loader loader = new Loader();
 
     @Test
     public void shouldSolveLevelZero() throws Exception {

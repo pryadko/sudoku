@@ -9,8 +9,8 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public abstract class AbstractAlgorithm implements Algorithm {
-    protected Board board = new Board();
-    protected Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
+    final Board board = new Board();
+    final Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
 
     @Autowired
     public AbstractAlgorithm(Board board) {

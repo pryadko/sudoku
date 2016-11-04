@@ -20,7 +20,7 @@ public class LevelDummyTest {
                     "*   *419*  5*\n" +
                     "*   * 8 * 79*\n" +
                     "*************\n";
-    private Loader loader = new Loader();
+    private final Loader loader = new Loader();
 
     @Test
     public void shouldSolveNothing() throws Exception {
