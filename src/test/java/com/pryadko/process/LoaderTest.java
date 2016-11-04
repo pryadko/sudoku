@@ -1,10 +1,16 @@
 package com.pryadko.process;
 
+import com.pryadko.algorithm.Algorithm;
+import com.pryadko.algorithm.LevelDummy;
+import com.pryadko.algorithm.LevelZero;
 import com.pryadko.domain.Board;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class LoaderTest {
+    private Loader loader = new Loader();
+    private Algorithm levelDummy = new LevelDummy();
+    private Algorithm levelZero = new LevelZero();
 
     public static final String EXPECTED = "*************\n" +
             "*534*678*912*\n" +
@@ -21,17 +27,19 @@ public class LoaderTest {
             "*************\n";
 
     @Test
-    public void shouldLoadBoardFromFole() throws Exception {
-        Loader loader = new Loader();
-        Board board = loader.loadBoard("src/test/resources/input.txt");
+    public void shouldLoadBoardFromFile() throws Exception {
+        Board board = new Board(levelDummy);
+
+        board.addAllToQueue(loader.loadQueue("src/test/resources/input.txt"));
 
         Assert.assertEquals(EXPECTED, board.toString());
     }
 
     @Test
     public void shouldSolveLevel0() throws Exception {
-        Loader loader = new Loader();
-        Board board = loader.loadBoard("src/test/resources/input_level_0.txt");
+        Board board = new Board(levelZero);
+
+        board.addAllToQueue(loader.loadQueue("src/test/resources/input_level_0.txt"));
 
         Assert.assertEquals(EXPECTED, board.toString());
     }

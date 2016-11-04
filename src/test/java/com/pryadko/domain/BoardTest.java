@@ -1,5 +1,7 @@
 package com.pryadko.domain;
 
+import com.pryadko.algorithm.Algorithm;
+import com.pryadko.algorithm.LevelDummy;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +31,8 @@ public class BoardTest {
         }
     };
 
+    private static final Algorithm levelDummy = new LevelDummy();
+
     @Before
     public void setUp() throws Exception {
         EXPECTED.forEach((integer, integers) -> Arrays.sort(integers));
@@ -36,7 +40,7 @@ public class BoardTest {
 
     @Test
     public void shouldGenereteEmptyBoardWhenWeCreateNewOne() throws Exception {
-        Board board = new Board();
+        Board board = new Board(levelDummy);
 
         Assert.assertEquals(
                 "*************\n" +
@@ -57,7 +61,7 @@ public class BoardTest {
 
     @Test
     public void shouldPopulateDependentsIdForCell() throws Exception {
-        Board board = new Board();
+        Board board = new Board(levelDummy);
 
         EXPECTED.forEach((key, expected) -> assertArrayEquals(expected, toIds(board.getDependentCell(key))));
     }

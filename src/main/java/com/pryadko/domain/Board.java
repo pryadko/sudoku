@@ -1,6 +1,8 @@
 package com.pryadko.domain;
 
+import com.pryadko.algorithm.Algorithm;
 import javafx.util.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -10,12 +12,21 @@ public class Board {
     private static int SMALL_SIZE = SIZE / 3;
     private List<Cell> cells = new ArrayList<>(81);
     private Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
+    private final Algorithm algorithm;
 
-    public Board() {
+    @Autowired
+    public Board(Algorithm algorithm) {
         for (int i = 0; i < SIZE * SIZE; i++) {
             cells.add(new Cell(i));
         }
+        this.algorithm = algorithm;
     }
+
+    public void addAllToQueue(Collection<? extends Pair<Integer, Integer>> queue) {
+        this.queue.addAll(queue);
+        solve();
+    }
+
 
     public void setValue(int index, int value) {
         //todo need add range validation
@@ -32,13 +43,10 @@ public class Board {
         Integer value = pairToSolve.getValue();
         cells.get(key).setValue(value);
 
-        getDependentCell(key).forEach(cell -> {
-            cell.removeDependency(value);
-            if (cell.hasOneVariant()) {
-                Pair<Integer, Integer> newPairToSolve = new Pair<>(cell.getId(), cell.getVariant());
-                queue.add(newPairToSolve);
-            }
-        });
+        Set<Cell> dependentCell = getDependentCell(key);
+        dependentCell.forEach(cell -> cell.removeDependency(value));
+
+        queue.addAll(algorithm.solve(dependentCell));
 
         solve();
     }
