@@ -25,11 +25,26 @@ public class LevelSecondTest {
                     "*537*921*648*\n" +
                     "*412*678*935*\n" +
                     "*************\n";
+
+    private static final String EXPECTED_YOUTUBE =
+            "*************\n" +
+                    "*814*329*675*\n" +
+                    "*576*481*923*\n" +
+                    "*932*657*481*\n" +
+                    "*************\n" +
+                    "*159*273*864*\n" +
+                    "*647*198*532*\n" +
+                    "*283*546*719*\n" +
+                    "*************\n" +
+                    "*728*934*156*\n" +
+                    "*391*865*247*\n" +
+                    "*465*712*398*\n" +
+                    "*************\n";
     private final Loader loader = new Loader();
 
     @Test
     @Ignore
-    public void shouldSolveLevelFirst() throws Exception {
+    public void shouldSolveLevelSecond() throws Exception {
         File file = new File("src/test/resources/input_level_2.txt");
         Board board = loader.loadBoard(file);
         Solver solver = new Solver(board, Arrays.asList(new LevelZero(), new LevelFirst()));
@@ -37,6 +52,18 @@ public class LevelSecondTest {
         Board actual = solver.solve();
 
         Assert.assertEquals(EXPECTED, actual.toString());
+    }
+
+    @Test
+    @Ignore
+    public void shouldSolveYoutubeSudoku() throws Exception {
+        File file = new File("src/test/resources/input_level_youtube.txt");
+        Board board = loader.loadBoard(file);
+        Solver solver = new Solver(board, Arrays.asList(new LevelZero(), new LevelFirst()));
+
+        Board actual = solver.solve();
+
+        Assert.assertEquals(EXPECTED_YOUTUBE, actual.toString());
     }
 
 }
