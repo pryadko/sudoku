@@ -28,6 +28,37 @@ public class BoardTest {
             put(34, new Integer[]{27, 28, 29, 30, 31, 32, 33, 35, 7, 16, 25, 43, 52, 61, 70, 79, 42, 51, 44, 53});
         }
     };
+
+    private static final Map<Integer, Integer[]> EXPECTED_COL = new HashMap<Integer, Integer[]>() {
+        {
+            put(0, new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8});
+            put(8, new Integer[]{72, 73, 74, 75, 76, 77, 78, 79, 80});
+            put(3, new Integer[]{27, 28, 29, 30, 31, 32, 33, 34, 35});
+            put(7, new Integer[]{63, 64, 65, 66, 67, 68, 69, 70, 71});
+            put(5, new Integer[]{45, 46, 47, 48, 49, 50, 51, 52, 53});
+        }
+    };
+
+    private static final Map<Integer, Integer[]> EXPECTED_ROW = new HashMap<Integer, Integer[]>() {
+        {
+            put(0, new Integer[]{0, 9, 18, 27, 36, 45, 54, 63, 72});
+            put(8, new Integer[]{8, 17, 26, 35, 44, 53, 62, 71, 80});
+            put(3, new Integer[]{3, 12, 21, 30, 39, 48, 57, 66, 75});
+            put(7, new Integer[]{7, 16, 25, 34, 43, 52, 61, 70, 79});
+            put(5, new Integer[]{5, 14, 23, 32, 41, 50, 59, 68, 77});
+        }
+    };
+
+    private static final Map<Integer, Integer[]> EXPECTED_BOX = new HashMap<Integer, Integer[]>() {
+        {
+            put(0, new Integer[]{0, 1, 2, 9, 10, 11, 18, 19, 20});
+            put(8, new Integer[]{60, 61, 62, 69, 70, 71, 78, 79, 80});
+            put(3, new Integer[]{27, 28, 29, 36, 37, 38, 45, 46, 47});
+            put(7, new Integer[]{57, 58, 59, 66, 67, 68, 75, 76, 77});
+            put(5, new Integer[]{33, 34, 35, 42, 43, 44, 51, 52, 53});
+            put(4, new Integer[]{30, 31, 32, 39, 40, 41, 48, 49, 50});
+        }
+    };
     private static final String EMPTY_BOARD =
             "*************\n" +
                     "*   *   *   *\n" +
@@ -46,6 +77,9 @@ public class BoardTest {
     @Before
     public void setUp() throws Exception {
         EXPECTED.forEach((integer, integers) -> Arrays.sort(integers));
+        EXPECTED_COL.forEach((integer, integers) -> Arrays.sort(integers));
+        EXPECTED_ROW.forEach((integer, integers) -> Arrays.sort(integers));
+        EXPECTED_BOX.forEach((integer, integers) -> Arrays.sort(integers));
     }
 
     @Test
@@ -60,6 +94,27 @@ public class BoardTest {
         Board board = new Board();
 
         EXPECTED.forEach((key, expected) -> assertArrayEquals(expected, toIds(board.getDependentCell(key))));
+    }
+
+    @Test
+    public void shouldReturnDependentCellsForCols() throws Exception {
+        Board board = new Board();
+
+        EXPECTED_COL.forEach((key, expected) -> assertArrayEquals(expected, toIds(board.getDependencyCol(key))));
+    }
+
+    @Test
+    public void shouldReturnDependentCellsForRows() throws Exception {
+        Board board = new Board();
+
+        EXPECTED_ROW.forEach((key, expected) -> assertArrayEquals(expected, toIds(board.getDependencyRow(key))));
+    }
+
+    @Test
+    public void shouldReturnDependentCellsForBoxes() throws Exception {
+        Board board = new Board();
+
+        EXPECTED_BOX.forEach((key, expected) -> assertArrayEquals(expected, toIds(board.getDependencyBox(key))));
     }
 
     private Integer[] toIds(Set<Cell> actual) {
