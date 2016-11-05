@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class LoaderTest {
     private final Loader loader = new Loader();
-/*    private Algorithm levelDummy = new AbstractAlgorithm();
+/*    private Algorithm levelDummy = new Solver();
     private Algorithm levelZero = new LevelZero();*/
 
     private static final String EXPECTED =

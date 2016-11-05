@@ -80,6 +80,10 @@ public class Cell {
         return !isEmpty();
     }
 
+    public Set<Integer> getAllowNumbers() {
+        return new HashSet<>(allowNumbers);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

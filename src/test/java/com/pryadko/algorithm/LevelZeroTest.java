@@ -5,6 +5,8 @@ import com.pryadko.process.Loader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Collections;
+
 public class LevelZeroTest {
     private static final String EXPECTED =
             "*************\n" +
@@ -25,9 +27,9 @@ public class LevelZeroTest {
     @Test
     public void shouldSolveLevelZero() throws Exception {
         Board board = loader.loadBoard("src/test/resources/input_level_0.txt");
-        Algorithm algorithm = new LevelZero(board);
+        Solver solver = new Solver(board, Collections.singletonList(new LevelZero()));
 
-        Board actual = algorithm.solve();
+        Board actual = solver.solve();
 
         Assert.assertEquals(EXPECTED, actual.toString());
     }

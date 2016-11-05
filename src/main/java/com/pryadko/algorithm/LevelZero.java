@@ -4,28 +4,22 @@ import com.pryadko.domain.Board;
 import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayDeque;
+import java.util.Queue;
+
 @Service
-public class LevelZero extends AbstractAlgorithm {
-    public LevelZero(Board board) {
-        super(board);
-    }
+public class LevelZero implements Algorithm {
 
-    @Override
-    public Board solve() {
-        if (queue.isEmpty()) {
-            return board;
-        }
-        Pair<Integer, Integer> pair = queue.poll();
-        board.setValue(pair.getKey(), pair.getValue());
+    public Queue<Pair<Integer, Integer>> solve(Board board) {
 
-        board.getDependentCell(pair.getKey())
+        Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
+        board.getCells()
                 .forEach(cell -> {
                     if (cell.hasOneVariant()) {
                         Pair<Integer, Integer> newPairToSolve = new Pair<>(cell.getId(), cell.getVariant());
                         queue.add(newPairToSolve);
                     }
                 });
-
-        return solve();
+        return queue;
     }
 }

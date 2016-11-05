@@ -5,6 +5,8 @@ import com.pryadko.process.Loader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class LevelDummyTest {
     private static final String EXPECTED =
             "*************\n" +
@@ -25,9 +27,9 @@ public class LevelDummyTest {
     @Test
     public void shouldSolveNothing() throws Exception {
         Board board = loader.loadBoard("src/test/resources/input_level_0.txt");
-        Algorithm algorithm = new LevelDummy(board);
+        Solver solver = new Solver(board, new ArrayList<>());
 
-        Board actual = algorithm.solve();
+        Board actual = solver.solve();
 
         Assert.assertEquals(EXPECTED, actual.toString());
     }
