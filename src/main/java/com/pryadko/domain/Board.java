@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Repository
@@ -27,6 +28,30 @@ public class Board {
     public void setValue(int index, int value) {
         cells.get(index).setValue(value);
         getDependentCell(index).forEach(cell -> cell.removeDependency(value));
+    }
+
+    public Set<Cell> getDependencyCol(Integer row) {
+        return IntStream.range(0, SIZE)
+                .mapToObj(ind -> cells.get(row * SIZE + ind))
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Cell> getDependencyRow(Integer col) {
+        return IntStream.range(0, SIZE)
+                .mapToObj(ind -> cells.get(ind * SIZE + col % SIZE))
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Cell> getDependencyBox(Integer box) {
+        int startPosition = SMALL_SIZE * (box / SMALL_SIZE * SIZE + box % SMALL_SIZE);
+
+        Set<Cell> dependentCells = new HashSet<>();
+        IntStream.range(0, SMALL_SIZE)
+                .forEach(x -> IntStream.range(0, SMALL_SIZE)
+                        .forEach(y -> {
+                            dependentCells.add(cells.get(startPosition + y * SIZE + x));
+                        }));
+        return dependentCells;
     }
 
     public Set<Cell> getDependentCell(Integer cellId) {
