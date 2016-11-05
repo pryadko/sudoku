@@ -4,6 +4,8 @@ import com.pryadko.domain.Board;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
+
 public class LoaderTest {
     private final Loader loader = new Loader();
 /*    private Algorithm levelDummy = new Solver();
@@ -26,7 +28,8 @@ public class LoaderTest {
 
     @Test
     public void shouldLoadBoardFromFile() throws Exception {
-        Board board = loader.loadBoard("src/test/resources/input.txt");
+        File file = new File("src/test/resources/input.txt");
+        Board board = loader.loadBoard(file);
 
         Assert.assertEquals(EXPECTED, board.toString());
     }

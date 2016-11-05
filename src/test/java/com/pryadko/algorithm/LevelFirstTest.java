@@ -6,6 +6,7 @@ import com.pryadko.process.Loader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.Arrays;
 
 public class LevelFirstTest {
@@ -27,7 +28,8 @@ public class LevelFirstTest {
 
     @Test
     public void shouldSolveLevelFirst() throws Exception {
-        Board board = loader.loadBoard("src/test/resources/input_level_1.txt");
+        File file = new File("src/test/resources/input_level_1.txt");
+        Board board = loader.loadBoard(file);
         Solver solver = new Solver(board, Arrays.asList(new LevelZero(), new LevelFirst()));
 
         Board actual = solver.solve();
