@@ -11,8 +11,8 @@ import java.util.stream.IntStream;
 
 @Repository
 public class Board {
-    private static final int SIZE = 9;
-    private static final int SMALL_SIZE = SIZE / 3;
+    public static final int SIZE = 9;
+    public static final int SMALL_SIZE = SIZE / 3;
     private final List<Cell> cells = new ArrayList<>(81);
 
     public Board() {
