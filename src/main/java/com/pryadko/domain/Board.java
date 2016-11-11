@@ -25,6 +25,16 @@ public class Board {
         return new ArrayList<>(cells);
     }
 
+    public boolean isSolved() {
+        return getCells().stream()
+                .allMatch(Cell::isNotEmpty);
+    }
+
+    public boolean isValid() {
+        //todo not implemented yet
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
     public void setValue(int index, int value) {
         cells.get(index).setValue(value);
         getDependentCell(index).forEach(cell -> cell.removeDependency(value));
