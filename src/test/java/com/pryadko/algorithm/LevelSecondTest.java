@@ -55,7 +55,6 @@ public class LevelSecondTest {
     }
 
     @Test
-    @Ignore
     public void shouldSolveYoutubeSudoku() throws Exception {
         File file = new File("src/test/resources/input_level_youtube.txt");
         Board board = loader.loadBoard(file);
@@ -64,6 +63,17 @@ public class LevelSecondTest {
         Board actual = solver.solve();
 
         Assert.assertEquals(EXPECTED_YOUTUBE, actual.toString());
+    }
+
+    @Test
+    public void shouldSolveTutorialSudoku() throws Exception {
+        File file = new File("src/test/resources/input_level_2_tutorial.txt");
+        Board board = loader.loadBoard(file);
+        Solver solver = new Solver(board, Arrays.asList(new LevelZero(), new LevelFirst()));
+
+        Board actual = solver.solve();
+
+        Assert.assertTrue(actual.isSolved());
     }
 
 }
