@@ -4,8 +4,8 @@ import com.pryadko.domain.Board;
 import com.pryadko.domain.Cell;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -15,7 +15,6 @@ import static com.pryadko.domain.Board.SIZE;
 @Service
 public class LevelSecond implements Algorithm {
     //todo need implement
-// 1)remove triade and quadre
 // 2) more flexible find pair not only for size = 2, 3 or 4
 // 3) increase delete availible variant if pair in one block
     @Override
@@ -28,35 +27,29 @@ public class LevelSecond implements Algorithm {
 
     private void resolveNakedPair(Board solved, int ind) {
         Set<Cell> dependencyRow = solved.getDependencyRow(ind);
-        clearNakedPair(dependencyRow);
+        clearNaked(dependencyRow);
         Set<Cell> dependencyCol = solved.getDependencyCol(ind);
-        clearNakedPair(dependencyCol);
+        clearNaked(dependencyCol);
         Set<Cell> dependencyBox = solved.getDependencyBox(ind);
-        clearNakedPair(dependencyBox);
+        clearNaked(dependencyBox);
     }
 
-    private void clearNakedPair(Set<Cell> dependencyRow) {
-        List<Cell> cells = dependencyRow.stream()
-                .filter(cell -> cell.getCountVariants() == 2)
-                .collect(Collectors.toList());
-        if (cells.size() != 2) {
-            return;
-        }
-        for (int i = 0; i < cells.size() - 1; i++) {
-            if (cells.get(i).getAllowNumbers().equals(cells.get(i + 1).getAllowNumbers())) {
-                Iterator<Integer> iterator = cells.get(i).getAllowNumbers().iterator();
-                clearNakedPair(dependencyRow, cells, iterator.next(), iterator.next());
+    private void clearNaked(Set<Cell> dependencyCells) {
+        Map<Set<Integer>, List<Cell>> mapDependentCells = dependencyCells.stream()
+                .filter(Cell::isEmpty)
+                .collect(Collectors.groupingBy(Cell::getAllowNumbers));
+
+        mapDependentCells.forEach((keys, cells) -> {
+            if (keys.size() == cells.size()) {
+                clearNakedPair(dependencyCells, cells);
             }
-        }
+        });
     }
 
-    private void clearNakedPair(Set<Cell> dependies, List<Cell> cells, Integer one, Integer two) {
-        dependies.stream()
+    private void clearNakedPair(Set<Cell> decencies, List<Cell> cells) {
+        decencies.stream()
                 .filter(cell -> !cells.contains(cell))
-                .forEach(cell -> {
-                    cell.removeVariant(one);
-                    cell.removeVariant(two);
-                });
+                .forEach(cell -> cell.removeVariants(cells.get(0).getAllowNumbers()));
     }
 
 }
