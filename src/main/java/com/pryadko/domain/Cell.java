@@ -72,7 +72,7 @@ public class Cell {
         return allowNumbers.iterator().next();
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return value == 0;
     }
 
@@ -92,13 +92,15 @@ public class Cell {
         Cell cell = (Cell) o;
 
         if (id != cell.id) return false;
-        return value == cell.value;
+        if (value != cell.value) return false;
+        return allowNumbers.equals(cell.allowNumbers);
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + value;
+        result = 31 * result + allowNumbers.hashCode();
         return result;
     }
 }
