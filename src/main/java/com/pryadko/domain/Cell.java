@@ -78,6 +78,14 @@ public class Cell {
         return allowNumbers.iterator().next();
     }
 
+    public int getCountVariants() {
+        return allowNumbers.size();
+    }
+
+    public void removeVariant(int value) {
+        allowNumbers.remove(value);
+    }
+
     public boolean isEmpty() {
         return value == 0;
     }
