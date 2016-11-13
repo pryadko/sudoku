@@ -4,7 +4,6 @@ package com.pryadko.algorithm;
 import com.pryadko.domain.Board;
 import com.pryadko.process.Loader;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -43,11 +42,10 @@ public class LevelSecondTest {
     private final Loader loader = new Loader();
 
     @Test
-    @Ignore
     public void shouldSolveLevelSecond() throws Exception {
         File file = new File("src/test/resources/input_level_2.txt");
         Board board = loader.loadBoard(file);
-        Solver solver = new Solver(Arrays.asList(new LevelZero(), new LevelFirst()));
+        Solver solver = new Solver(Arrays.asList(new LevelZero(), new LevelFirst(), new LevelSecond()));
 
         Board actual = solver.solve(board);
 
