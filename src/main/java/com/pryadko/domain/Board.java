@@ -1,5 +1,6 @@
 package com.pryadko.domain;
 
+import javafx.util.Pair;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -21,6 +22,16 @@ public class Board {
         }
     }
 
+    public Board(Board board) {
+        for (int i = 0; i < SIZE * SIZE; i++) {
+            cells.add(board.getCell(i));
+        }
+    }
+
+    public Cell getCell(int index) {
+        return new Cell(cells.get(index));
+    }
+
     public List<Cell> getCells() {
         return new ArrayList<>(cells);
     }
@@ -38,6 +49,14 @@ public class Board {
     public void setValue(int index, int value) {
         cells.get(index).setValue(value);
         getDependentCell(index).forEach(cell -> cell.removeDependency(value));
+    }
+
+    public void setValue(Pair<Integer, Integer> value) {
+        setValue(value.getKey(), value.getValue());
+    }
+
+    public void setValues(List<Pair<Integer, Integer>> values) {
+        values.forEach(this::setValue);
     }
 
     public Set<Cell> getDependencyCol(Integer row) {

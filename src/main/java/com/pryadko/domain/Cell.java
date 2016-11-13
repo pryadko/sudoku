@@ -14,6 +14,12 @@ public class Cell {
         initValue();
     }
 
+    public Cell(Cell cell) {
+        this.id = cell.getId();
+        this.value = cell.getValue();
+        this.allowNumbers = cell.getAllowNumbers();
+    }
+
     public String getString() {
         return Arrays.toString(allowNumbers.toArray());
     }
