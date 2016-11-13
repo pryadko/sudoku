@@ -29,9 +29,9 @@ public class LevelDummyTest {
     public void shouldSolveNothing() throws Exception {
         File file = new File("src/test/resources/input_level_0.txt");
         Board board = loader.loadBoard(file);
-        Solver solver = new Solver(board, new ArrayList<>());
+        Solver solver = new Solver(new ArrayList<>());
 
-        Board actual = solver.solve();
+        Board actual = solver.solve(board);
 
         Assert.assertEquals(EXPECTED, actual.toString());
     }

@@ -29,9 +29,9 @@ public class LevelZeroTest {
     public void shouldSolveLevelZero() throws Exception {
         File file = new File("src/test/resources/input_level_0.txt");
         Board board = loader.loadBoard(file);
-        Solver solver = new Solver(board, Collections.singletonList(new LevelZero()));
+        Solver solver = new Solver(Collections.singletonList(new LevelZero()));
 
-        Board actual = solver.solve();
+        Board actual = solver.solve(board);
 
         Assert.assertEquals(EXPECTED, actual.toString());
     }

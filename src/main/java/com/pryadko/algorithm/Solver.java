@@ -1,36 +1,36 @@
 package com.pryadko.algorithm;
 
 import com.pryadko.domain.Board;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Queue;
 
 @Service
 public class Solver {
 
     private final List<Algorithm> algorithms;
-    private final Board board;
 
     @Autowired
-    public Solver(Board board, List<Algorithm> algorithms) {
-        this.board = board;
+    public Solver(List<Algorithm> algorithms) {
         this.algorithms = algorithms;
     }
 
-    public Board solve() {
-
-        for (Algorithm algorithm : algorithms) {
-            Queue<Pair<Integer, Integer>> queue = algorithm.solve(board);
-            if (!queue.isEmpty()) {
-                queue.forEach(pair -> board.setValue(pair.getKey(), pair.getValue()));
-                solve();
+    public Board solve(Board board) {
+        Board before;
+        Board solved = new Board(board);
+        do {
+            before = new Board(solved);
+            for (Algorithm algorithm : algorithms) {
+                solved = algorithm.solve(before);
+                if (!solved.equals(before)) {
+                    break;
+                }
             }
-        }
+        } while (!solved.equals(before));
 
-        return board;
+
+        return solved;
     }
 
 }

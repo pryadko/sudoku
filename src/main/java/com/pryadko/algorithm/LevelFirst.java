@@ -5,9 +5,9 @@ import com.pryadko.domain.Cell;
 import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Queue;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -17,24 +17,23 @@ import static com.pryadko.domain.Board.SIZE;
 public class LevelFirst implements Algorithm {
 
     @Override
-    public Queue<Pair<Integer, Integer>> solve(Board board) {
-        Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
-
+    public Board solve(Board board) {
+        Board solved = new Board(board);
         IntStream.range(0, SIZE)
                 .forEach(ind -> {
                     Set<Cell> dependencyCol = board.getDependencyCol(ind);
-                    queue.addAll(getToQueUnicqCell(dependencyCol));
+                    solved.setValues(getToQueUnicqCell(dependencyCol));
                     dependencyCol = board.getDependencyRow(ind);
-                    queue.addAll(getToQueUnicqCell(dependencyCol));
+                    solved.setValues(getToQueUnicqCell(dependencyCol));
                     dependencyCol = board.getDependencyBox(ind);
-                    queue.addAll(getToQueUnicqCell(dependencyCol));
+                    solved.setValues(getToQueUnicqCell(dependencyCol));
                 });
-        return queue;
+        return solved;
     }
 
 
-    private Queue<Pair<Integer, Integer>> getToQueUnicqCell(Set<Cell> dependencyCol) {
-        Queue<Pair<Integer, Integer>> queue = new ArrayDeque<>();
+    private List<Pair<Integer, Integer>> getToQueUnicqCell(Set<Cell> dependencyCol) {
+        List<Pair<Integer, Integer>> values = new ArrayList<>();
         Set<Integer> ids = new HashSet<>();
         Set<Integer> unique = new HashSet<>();
         dependencyCol.forEach(cell -> {
@@ -52,11 +51,11 @@ public class LevelFirst implements Algorithm {
                 .forEach(integer -> dependencyCol
                         .forEach(cell -> {
                             if (cell.getAllowNumbers().contains(integer)) {
-                                queue.add(new Pair<>(cell.getId(), integer));
+                                values.add(new Pair<>(cell.getId(), integer));
                             }
                         }));
 
-        return queue;
+        return values;
     }
 
 }
