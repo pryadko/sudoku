@@ -86,6 +86,10 @@ public class Cell {
         allowNumbers.remove(value);
     }
 
+    public void removeVariants(Set<Integer> values) {
+        allowNumbers.removeAll(values);
+    }
+
     public boolean isEmpty() {
         return value == 0;
     }
